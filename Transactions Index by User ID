@@ -1,2 +1,0 @@
-CREATE INDEX user_transactions
-ON transactions (user_id);
