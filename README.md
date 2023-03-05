@@ -1,5 +1,0 @@
-# Savvy Spender - A Python-based budget and transaction tracking program utilizing SQL.
-Savvy Spender is a back-end budget and transaction tracking program built with Python and SQL created for a Python programming class. It enables users to create personalized budgets that are categorized for easy tracking. Transactions can be entered either as they occur or periodically, making it easy to track spending and identify areas for improvement. The program also generates comprehensive reports that enable users to compare their budgets with actual spending, making it easy to stay on top of their finances.
-
-##### Savvy Spender has been integrated with another program.
-The tables, budgeting and transaction functions of this program have been integrated with an Investment Dashboard program (which is currently private). The combined program offers a more full picture of one's personal finance, goals and net-worth. The combined program will be public in the coming weeks upon completion of migration, integration and testing. 
