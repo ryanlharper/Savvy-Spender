@@ -1,0 +1,12 @@
+/venv/
+/myapp/migrations
+/.env
+/myapp/management/commands/__pycache__/
+.dockerignore
+docker-compose.yml
+/savvy_spender/templates/
+/myapp/templates/
+/myapp/__pycache__/
+/savvy_spender/__pycache__/
+Dockerfile
+installation.txt
