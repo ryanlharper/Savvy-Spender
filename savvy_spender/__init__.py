@@ -1,1 +1,0 @@
-from myapp.management.commands.initialize_categories import Command as InitializeCategoriesCommand
