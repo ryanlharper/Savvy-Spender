@@ -10,3 +10,4 @@ docker-compose.yml
 /savvy_spender/__pycache__/
 Dockerfile
 installation.txt
+/savvy_spender/settings.py
