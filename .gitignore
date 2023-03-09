@@ -1,0 +1,4 @@
+/venv/
+/savvy_spender/.env
+/savvy_spender/__pycache__/
+/savvy_spender/__init__.py 
