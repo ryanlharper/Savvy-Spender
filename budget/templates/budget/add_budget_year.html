@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Budget Item{% endblock %}
+
+{% block content %}
+  {{ block.super }}
+  <h2>Add Budget Year</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}
