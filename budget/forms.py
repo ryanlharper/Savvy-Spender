@@ -3,7 +3,7 @@ from django import forms
 from budget.models import Categories, Subcategories, BudgetYear
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from datetime import datetime
+
 
 
 class CategoryForm(forms.Form):
@@ -29,8 +29,9 @@ class BudgetItemForm(forms.Form):
     
     subcategory = forms.ModelChoiceField(queryset=Subcategories.objects.all())
     budget_year = forms.ModelChoiceField(queryset=BudgetYear.objects.all())
+    frequency = forms.ChoiceField(choices=[('YR','Yearly'),('MN',"Monthly")])
     amount = forms.DecimalField(max_digits=10, decimal_places=2)
-    notes = forms.CharField(max_length=128)
+    notes = forms.CharField(max_length=128, required=False)
 
 class BudgetYearForm(forms.ModelForm):
     year = forms.CharField(max_length=4)

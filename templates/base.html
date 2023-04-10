@@ -1,22 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Title{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  <title>{% block title %}Savvy Spender{% endblock %}</title>
 </head>
 <body>
-  <nav>
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="/register">Register</a>
-    <a href="/categories">Create Category</a> 
-    <a href="/subcategories">Create Subcategory</a> 
-    <a href="{% url 'create_budget_item' %}">Create Budget</a>
-    <a href="{% url 'add_budget_year' %}">Add Year</a>
-    <a href="{% url 'logout' %}">Log Out</a>
-  </nav>
   <main>
     {% block content %}
+  <nav>
+    <a href="{% url 'home' %}">Home</a> | 
+    <a href="{% url 'login' %}">Log In</a> | 
+    <a href="/register">Register</a> | 
+    <a href="{% url 'my_budget' %}">My Budget</a> |
+    <a href="/my_categories">My Categories</a> |
+    <a href="/my_subcategories">My Subcategories</a> |
+    <a href="/categories">Create Category</a> |
+    <a href="/subcategories">Create Subcategory</a> |
+    <a href="{% url 'create_budget_item' %}">Create Budget</a> |
+    <a href="{% url 'add_budget_year' %}">Add Year</a> |
+    <a href="{% url 'logout' %}">Log Out</a> |
+  </nav>
     {% endblock %}
   </main>
 </body>

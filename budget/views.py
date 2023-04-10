@@ -44,13 +44,15 @@ def create_budget_item(request):
             category = subcategory.category
             budget_item = BudgetItem(
                 user = user,
+                budget_year = form.cleaned_data['budget_year'],
                 subcategory=subcategory,
                 category=category,
+                frequency=form.cleaned_data['frequency'],
                 amount=form.cleaned_data['amount'],
                 notes=form.cleaned_data['notes'],                
             )
             budget_item.save()
-            return redirect('budget_items')
+            return redirect('create_budget_item')
     else:
         form = BudgetItemForm(user=user)
     return render(request, 'budget/create_budget_item.html', {'form': form})
@@ -67,6 +69,29 @@ def add_budget_year(request):
         form = BudgetYearForm()
     return render(request, 'budget/add_budget_year.html', {'form': form})
 
+@login_required
+def my_budget(request):
+    user = request.user
+    budget_items = BudgetItem.objects.filter(user=user).order_by('category')
+
+    context = {'budget_items': budget_items}
+    return render(request, 'budget/budget.html', context)
+
+@login_required
+def my_categories(request):
+    user = request.user
+    categories = Categories.objects.filter(user=user)
+
+    context = {'categories': categories}
+    return render(request, 'my_categories.html', context)
+
+@login_required
+def my_subcategories(request):
+    user = request.user
+    subcategories = Subcategories.objects.filter(user=user).order_by('category')
+
+    context = {'subcategories': subcategories}
+    return render(request, 'my_subcategories.html', context)
 
 def create_transaction(request):
     pass

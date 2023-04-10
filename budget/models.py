@@ -23,6 +23,9 @@ class Categories(models.Model):
 
     def __str__(self):
         return self.category_name
+    
+    def get_type_display(self):
+        return dict(self.TYPE_CHOICES).get(self.type, '')
 
 class Subcategories(models.Model):
     user =  models.ForeignKey(User, on_delete=models.CASCADE)
@@ -39,8 +42,19 @@ class BudgetItem(models.Model):
     budget_year = models.ForeignKey(BudgetYear, on_delete=models.CASCADE)
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(Subcategories, on_delete=models.CASCADE)
+    FREQUENCY_CHOICES = [
+        ("YR","Yearly"),
+        ("MN", "Monthly"),
+    ]
+    frequency = models.CharField(
+        max_length=2,
+        choices=FREQUENCY_CHOICES
+    )
     amount = models.DecimalField(max_digits=10, decimal_places=2)	
     notes = models.CharField(max_length=128, null=True)
+
+    def get_frequency_display(self):
+        return dict(self.FREQUENCY_CHOICES).get(self.frequency, '')
 
 class Transaction(models.Model):
     user =  models.ForeignKey(User, on_delete=models.CASCADE)
