@@ -1,4 +1,7 @@
 /venv/
 /savvy_spender/.env
+/savvy_spender/__init__.py
 /savvy_spender/__pycache__/
-/savvy_spender/__init__.py 
+/budget/__pycache__/
+/budget/migrations/
+/budget/__init__.py

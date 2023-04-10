@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView 
+from savvy_spender.views import SignUpView
+from budget.views import create_category, create_subcategory
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', TemplateView.as_view(template_name='home.html'), name='home'), 
+    path('register/', SignUpView.as_view(), name='register'),
+    path('categories/', create_category, name = 'categories'),
+    path('subcategories/', create_subcategory, name= 'subcategories'),
+
 ]
