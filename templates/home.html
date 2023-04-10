@@ -5,8 +5,27 @@
 {{ block.super }}
 
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-
+<h2>Savvy Spender</h2>
+<table>
+  <thead>
+    <th>View</th>
+    <th>Create</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="{% url 'my_budget' %}">My Budget</a></td>
+      <td><a href="{% url 'create_budget_item' %}">Create Budget</a></td>
+    </tr>
+    <tr>
+      <td><a href="/my_categories">My Categories</a></td>
+      <td><a href="/categories">Create Category</a></td>
+    </tr>
+    <tr>
+      <td><a href="/my_subcategories">My Subcategories</a></td>
+      <td><a href="/subcategories">Create Subcategory</a></td>
+    </tr>
+  </tbody>
+</table>
 {% else %}
   <p>You are not logged in</p>
 

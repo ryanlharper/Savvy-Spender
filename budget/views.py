@@ -93,5 +93,8 @@ def my_subcategories(request):
     context = {'subcategories': subcategories}
     return render(request, 'my_subcategories.html', context)
 
+def reports(request):
+    return render(request, 'reports.html')
+
 def create_transaction(request):
     pass
