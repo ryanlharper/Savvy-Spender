@@ -2,24 +2,22 @@
 
 {% block content %}
   {{ block.super }}
-  <h2>Create Budget Item</h2>
+  <h2>Create Transaction</h2>
   <form method="post">
     {% csrf_token %}
     <table>
       <thead>
         <tr>
-          <th>Year <a href="{% url 'add_budget_year' %}" style="font-size: 10px;">Add Year</a></th>
+          <th>Date</th>
           <th>Subcategory <a href="/subcategories" style="font-size:10px;">Add Subcategory</a></th>
-          <th>Frequency</th>
           <th>Amount</th>
           <th>Notes</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{ form.budget_year }}</td>
+          <td>{{ form.date }}</td>
           <td>{{ form.subcategory }}</td>
-          <td>{{ form.frequency }}</td>
           <td>{{ form.amount }}</td>
           <td>{{ form.notes }}</td>
         </tr>

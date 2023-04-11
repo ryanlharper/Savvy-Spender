@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView 
 from savvy_spender.views import SignUpView
-from budget.views import create_category, create_subcategory, create_budget_item, add_budget_year, my_budget, my_categories, my_subcategories, reports
+from budget.views import create_category, create_subcategory, create_budget_item, create_transaction
+from budget.views import add_budget_year, my_budget, my_categories, my_subcategories, reports, my_transactions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,5 +32,8 @@ urlpatterns = [
     path('budget/my_budget', my_budget, name= 'my_budget'),
     path('my_categories', my_categories, name= 'my_categories'),
     path('my_subcategories', my_subcategories, name= 'my_subcategories'),
-    path('reports/', reports, name= 'reports')
+    path('reports/', reports, name= 'reports'),
+    path('create_transaction/', create_transaction, name= 'create_transaction'),
+    path('my_transactions/', my_transactions, name= 'my_transactions'),
+
 ]

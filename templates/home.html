@@ -24,6 +24,10 @@
       <td><a href="/my_subcategories">My Subcategories</a></td>
       <td><a href="/subcategories">Create Subcategory</a></td>
     </tr>
+    <tr>
+      <td><a href="{% url 'my_transactions' %}">My Transactions</a></td>
+      <td><a href="{% url 'create_transaction' %}">Create Transactions</a></td>
+    </tr>
   </tbody>
 </table>
 {% else %}

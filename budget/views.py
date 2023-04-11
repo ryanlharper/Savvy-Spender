@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from budget.forms import SubcategoryForm, CategoryForm, BudgetItemForm, BudgetYearForm
-from budget.models import Categories, Subcategories, BudgetItem, BudgetYear
+from budget.forms import SubcategoryForm, CategoryForm, BudgetItemForm, BudgetYearForm, TransactionForm
+from budget.models import Categories, Subcategories, BudgetItem, BudgetYear, Transaction
 
 @login_required
 def create_category(request):
@@ -23,7 +23,7 @@ def create_category(request):
 def create_subcategory(request):
     user = request.user
     if request.method == 'POST':
-        form = SubcategoryForm(request.POST)
+        form = SubcategoryForm(request.POST, user=user)
         if form.is_valid():
             subcategory = Subcategories(
                 user = user,
@@ -32,7 +32,7 @@ def create_subcategory(request):
             )
             subcategory.save()
     else:
-        form = SubcategoryForm()
+        form = SubcategoryForm(user=user)
     return render(request, 'create_subcategory.html', {'form': form, 'user': user})
 
 def create_budget_item(request):
@@ -93,8 +93,36 @@ def my_subcategories(request):
     context = {'subcategories': subcategories}
     return render(request, 'my_subcategories.html', context)
 
+@login_required
 def reports(request):
     return render(request, 'reports.html')
 
+@login_required
 def create_transaction(request):
-    pass
+    user = request.user
+    if request.method == 'POST':
+        form =TransactionForm(request.POST)
+        if form.is_valid():
+            subcategory=form.cleaned_data['subcategory']
+            category = subcategory.category
+            transaction = Transaction(
+                user = user,
+                date = form.cleaned_data['date'],
+                subcategory=subcategory,
+                category= category,
+                amount=form.cleaned_data['amount'],
+                notes=form.cleaned_data['notes'],                
+            )
+            transaction.save()
+            return redirect('create_transaction')
+    else:
+        form = TransactionForm(user=user)
+    return render(request, 'create_transaction.html', {'form': form})
+
+@login_required
+def my_transactions(request):
+    user = request.user
+    transactions = Transaction.objects.filter(user=user).order_by('date')
+
+    context = {'transactions': transactions}
+    return render(request, 'my_transactions.html', context)
