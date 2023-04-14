@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from budget.forms import SubcategoryForm, CategoryForm, BudgetItemForm, BudgetYearForm, TransactionForm
+from budget.forms import SubcategoryForm, CategoryForm, BudgetItemForm, BudgetYearForm, TransactionForm, UploadTransactionForm
 from budget.models import Categories, Subcategories, BudgetItem, BudgetYear, Transaction
+import csv, codecs
+from datetime import datetime
 
 @login_required
 def create_category(request):
@@ -126,3 +128,78 @@ def my_transactions(request):
 
     context = {'transactions': transactions}
     return render(request, 'my_transactions.html', context)
+
+@login_required
+def upload_transactions_csv(request):
+    if request.method == 'POST':
+        form = UploadTransactionForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Read the CSV file
+            csv_file = request.FILES['csv_file']
+            # Open the file in text mode using codecs module
+            reader = csv.reader(codecs.iterdecode(csv_file, 'utf-8'))
+
+            # Specify the field names
+            field_names = ['date', 'amount', 'skip1', 'skip2', 'notes']
+
+            # Loop over the rows and create a new Transaction instance for each row
+            transactions = []
+            for row in reader:
+                # Create a dictionary with the field names as keys and the row values as values
+                data_dict = dict(zip(field_names, row))
+                amount = float(data_dict['amount'])
+                if amount < 0:
+                    amount = abs(amount)
+                transaction = Transaction(
+                    user=request.user,
+                    date=data_dict['date'],
+                    amount=amount,
+                    notes=data_dict['notes']
+                )
+                transactions.append(transaction)
+
+            subcategories = Subcategories.objects.filter(user=request.user)
+            return render(request, 'edit_transactions.html', {'transactions': transactions, 'subcategories': subcategories})
+    else:
+        form = UploadTransactionForm()
+    
+    subcategories = Subcategories.objects.filter(user=request.user)
+    return render(request, 'upload_transactions.html', {'form': form})
+
+@login_required
+def save_transactions(request):
+    if request.method == 'POST':
+        # Get the form data
+        subcategory_ids = request.POST.getlist('subcategory')
+        print(subcategory_ids)
+        notes = request.POST.getlist('notes')
+        transaction_ids = request.POST.getlist('transaction_id')
+        transaction_dates = request.POST.getlist('transaction_date')
+        transaction_amounts = request.POST.getlist('transaction_amount')
+
+        # Loop over the transaction data and update the database
+        for i, transaction_id in enumerate(transaction_ids):
+            # Get the corresponding Transaction object
+            transaction = Transaction.objects.get(id=transaction_id)
+
+            # Get the corresponding Subcategories object
+            subcategory_id = subcategory_ids[i]
+            subcategories = Subcategories.objects.get(id=subcategory_id)
+
+            # Get the Category object associated with the Subcategories
+            category = subcategories.category
+
+            # Update the transaction with the selected subcategory, category, and notes
+            transaction.subcategories = subcategories
+            transaction.category = category
+            transaction.notes = notes[i]
+
+            # Update the transaction with the original date and amount
+            transaction.date = transaction_dates[i]
+            transaction.amount = transaction_amounts[i]
+
+            # Save the updated transaction to the database
+            transaction.save()
+
+        # Redirect the user to the transactions page
+        return redirect('my_transactions')

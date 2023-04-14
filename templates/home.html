@@ -9,24 +9,29 @@
 <table>
   <thead>
     <th>View</th>
-    <th>Create</th>
+    <th >Create</th>
+    <th>Upload</th>
   </thead>
   <tbody>
     <tr>
       <td><a href="{% url 'my_budget' %}">My Budget</a></td>
-      <td><a href="{% url 'create_budget_item' %}">Create Budget</a></td>
+      <td ><a href="{% url 'create_budget_item' %}">Create Budget</a></td>
+      <td></td>
     </tr>
     <tr>
       <td><a href="/my_categories">My Categories</a></td>
       <td><a href="/categories">Create Category</a></td>
+      <td></td>
     </tr>
     <tr>
       <td><a href="/my_subcategories">My Subcategories</a></td>
       <td><a href="/subcategories">Create Subcategory</a></td>
+      <td></td>
     </tr>
     <tr>
       <td><a href="{% url 'my_transactions' %}">My Transactions</a></td>
       <td><a href="{% url 'create_transaction' %}">Create Transactions</a></td>
+      <td><a href="{% url 'upload_transactions' %}">Upload Transactions</a></td>
     </tr>
   </tbody>
 </table>

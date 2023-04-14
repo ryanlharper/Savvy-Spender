@@ -57,3 +57,6 @@ class TransactionForm(forms.Form):
     amount = forms.DecimalField(max_digits=10, decimal_places=2)
     subcategory = forms.ModelChoiceField(queryset=Subcategories.objects.all())
     notes = forms.CharField(max_length=128, required=False)
+
+class UploadTransactionForm(forms.Form):
+    csv_file = forms.FileField(label='Select a CSV file')

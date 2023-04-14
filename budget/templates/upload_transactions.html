@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ block.super }}
+  <h2>Upload Transaction Data</h2>
+  <p>Currently only data from Wells Fargo can be uploaded.</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+{% endblock %}
