@@ -159,6 +159,7 @@ def upload_transactions_csv(request):
                 transactions.append(transaction)
 
             subcategories = Subcategories.objects.filter(user=request.user)
+            print(subcategories)
             return render(request, 'edit_transactions.html', {'transactions': transactions, 'subcategories': subcategories})
     else:
         form = UploadTransactionForm()
@@ -167,11 +168,11 @@ def upload_transactions_csv(request):
     return render(request, 'upload_transactions.html', {'form': form})
 
 @login_required
-def save_transactions(request):
+def edit_transactions(request):
     if request.method == 'POST':
         # Get the form data
         subcategory_ids = request.POST.getlist('subcategory')
-        print(subcategory_ids)
+        print("edit sub ids",subcategory_ids)
         notes = request.POST.getlist('notes')
         transaction_ids = request.POST.getlist('transaction_id')
         transaction_dates = request.POST.getlist('transaction_date')
